@@ -1,0 +1,15 @@
+{
+  "name": "fieldlead",
+  "private": true,
+  "version": "0.1.0",
+  "description": "FieldLead - Saha araştırma ve lead toplama platformu",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
