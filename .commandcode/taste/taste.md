@@ -1,3 +1,0 @@
-- Prefers Turkish-language responses. Confidence: 0.9
-- Asks for detailed, in-depth analysis. Confidence: 0.85
-- References documents with a @-prefixed path (e.g., @docs/prod.md). Confidence: 0.8

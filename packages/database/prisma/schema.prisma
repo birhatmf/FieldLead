@@ -1,0 +1,145 @@
+generator client {
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  runtime                = "nodejs"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  SALESPERSON
+}
+
+enum SearchStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  INTERESTED
+  QUOTE_SENT
+  CUSTOMER
+  NOT_INTERESTED
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  name      String
+  password  String
+  role      UserRole @default(SALESPERSON)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assignedLeads Lead[] @relation("LeadAssignee")
+
+  @@map("users")
+}
+
+model Search {
+  id          String       @id @default(uuid()) @db.Uuid
+  country     String       @default("TR")
+  city        String
+  district    String
+  keywords    String[]
+  status      SearchStatus @default(PENDING)
+  resultCount Int          @default(0)
+  createdAt   DateTime     @default(now())
+  completedAt DateTime?
+
+  results   SearchResult[]
+  apiUsages ApiUsage[]
+
+  @@index([city, district])
+  @@index([createdAt])
+  @@map("searches")
+}
+
+model Place {
+  id               String   @id @default(uuid()) @db.Uuid
+  googlePlaceId    String   @unique
+  name             String
+  category         String?
+  formattedAddress String?
+  phone            String?
+  email            String?
+  website          String?
+  googleMapsUrl    String?
+  rating           Float?
+  userRatingCount  Int?
+  latitude         Float?
+  longitude        Float?
+  city             String?
+  district         String?
+  country          String?
+  types            String[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  leads   Lead[]
+  results SearchResult[]
+
+  @@index([city, district])
+  @@index([category])
+  @@index([rating])
+  @@map("places")
+}
+
+model SearchResult {
+  id        String   @id @default(uuid()) @db.Uuid
+  searchId  String   @db.Uuid
+  placeId   String   @db.Uuid
+  keywords  String[]
+  createdAt DateTime @default(now())
+
+  search Search @relation(fields: [searchId], references: [id], onDelete: Cascade)
+  place  Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+
+  @@unique([searchId, placeId])
+  @@index([placeId])
+  @@map("search_results")
+}
+
+model Lead {
+  id         String     @id @default(uuid()) @db.Uuid
+  placeId    String     @unique @db.Uuid
+  status     LeadStatus @default(NEW)
+  assignedTo String?    @db.Uuid
+  notes      String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  place    Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
+  assignee User? @relation("LeadAssignee", fields: [assignedTo], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([assignedTo])
+  @@map("leads")
+}
+
+model ApiUsage {
+  id            String   @id @default(uuid()) @db.Uuid
+  provider      String
+  operation     String
+  searchId      String?  @db.Uuid
+  requestCount  Int      @default(0)
+  estimatedCost Decimal  @default(0) @db.Decimal(12, 6)
+  createdAt     DateTime @default(now())
+
+  search Search? @relation(fields: [searchId], references: [id], onDelete: SetNull)
+
+  @@index([provider, operation])
+  @@index([createdAt])
+  @@map("api_usages")
+}

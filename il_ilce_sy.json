@@ -1,0 +1,40 @@
+{
+  "Halep": [
+    "Halep",
+    "Afrin",
+    "Azez",
+    "Ayn el-Arab",
+    "Atarib",
+    "El-Bab",
+    "Dayr Hafir",
+    "As-Safira",
+    "Manbic",
+    "Cetal",
+    "Cerablus"
+  ],
+  "Şam": ["Şam"],
+  "Rif Şam": [
+    "Duma",
+    "Harasta",
+    "Ar-Rihan",
+    "Al-Zabadani",
+    "Yabrud",
+    "An-Nabk",
+    "Al-Qutayfah",
+    "Al-Qusayr",
+    "Darayya",
+    "Qatana",
+    "Qudsaya"
+  ],
+  "Homs": ["Homs", "Al-Rastan", "Tadmur", "Al-Mukharram", "Al-Qusayr", "Talkalakh"],
+  "Hama": ["Hama", "Masyaf", "Mahardah", "Al-Suqaylabiyah", "Salamiyah"],
+  "Lazkiye": ["Lazkiye", "Cebre", "Al-Haffah", "Qardaha"],
+  "Tartus": ["Tartus", "Baniyas", "Safita", "Al-Draykish", "Al-Shaykh Badr"],
+  "İdlib": ["İdlib", "Eriha", "Harem", "Cisr eş-Şuğur", "Ma'arrat al-Nu'man"],
+  "Dera": ["Dera", "Al-Sanamayn", "Izra"],
+  "Süveyda": ["Süveyda", "Salkhad", "Shahba"],
+  "Kunaytire": ["Kunaytire", "Fiq"],
+  "Deyrizor": ["Deyrizor", "Mayadin", "Al-Bukamal"],
+  "Rakka": ["Rakka", "Tel Abyad", "Al-Thawrah"],
+  "Haseke": ["Haseke", "Kamışlı", "Al-Malikiyah", "Ras al-Ayn"]
+}

@@ -1,0 +1,23 @@
+name: fieldlead
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: fieldlead-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: fieldlead
+      POSTGRES_PASSWORD: fieldlead
+      POSTGRES_DB: fieldlead
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fieldlead -d fieldlead"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
